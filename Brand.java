@@ -4,7 +4,7 @@ public class Brand{
     private int id ;
     private String name ;
 
-    public Brand(int id ,String name ){
+    public Brand(String name ){
 
         this.id = nextId ;
         this.name = name ;

@@ -4,18 +4,39 @@ public class Order {
     private int id ;
     private String SKU ; 
     private Brand brand ;
-    PaymentMethod paymentmethod ;
-    User user ;
+    private PaymentMethod paymentmethod ;
+    private User user ;
+    private Notification notification ;
+    private MetaApi whatsappApi ;
 
 
-    public Order(int id ,String SKU ,Brand brand,PaymentMethod paymentmethod,User user){
+    public Order(String SKU ,Brand brand,PaymentMethod paymentmethod,User user,Notification notification){
         this.id = nextId ;
         this.SKU = SKU ;
         this.brand = brand ;
         this.paymentmethod = paymentmethod ;
         this.user = user ;
+        notification.send(this,whatsappApi) ;
 
     }
+
+    public int getId(){
+        return id ;
+    }
+    public String getSKU(){
+        return SKU ;
+    }
+    public Brand getBrand(){
+        return brand ;
+    }
+    public PaymentMethod getPaymentMethod(){
+        return paymentmethod ;
+    }
+    public User getUser(){
+        return user ;
+    }
+
+        
     
     
 }

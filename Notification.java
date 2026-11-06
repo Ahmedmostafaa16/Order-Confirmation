@@ -1,11 +1,11 @@
-public class Notification { 
+public class Notification {
 
 
     private Order order ;
     private MetaApi whatsappApi ;
 
 
-    public Notification(Order order) {
+    public Notification(Order order ,MetaApi whatsappApi){ 
         this.order = order ;
         this.whatsappApi = whatsappApi ;
     }
@@ -14,22 +14,23 @@ public class Notification {
 
     public boolean Send() {
 
-        if (order.paymentmethod == PaymentMethod.CASH) {
-
-            if (!whatsappApi.sendMessage(order.user.getMobileNumber(),"hi{order.user.getName()} your order with id {order.id},from {order.brand.getName()} and SKU {order.SKU} has been placed successfully and will be delivered to {order.user.getAddress()}")) {
-
-                return false;
-            }
-
-        } else if (order.paymentmethod == PaymentMethod.ONLINE) {
+        if (order.getPaymentMethod() != PaymentMethod.CASH){
             return false ;
+        }
 
+        User user = order.getUser() ;
+        Brand brand = order.getBrand() ;
+        String message = "Hello " + user.getName() + ", your order with SKU: " + order.getSKU() + "from " + brand.getName() + " has been confirmed and will be send on address:"+ user.getAddress()+". Thank you for shopping with us!" ;
+        String phoneNumber = user.getMobileNumber() ;
+        
+        whatsappApi.sendMessage(phoneNumber , message) ;
         return true ;
 
 
-        }
 
 
     }
+
+
     
 }
