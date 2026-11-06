@@ -1,36 +1,27 @@
 public class Notification {
+    private final MetaApi whatsappApi;
 
-
-    private Order order ;
-    private MetaApi whatsappApi ;
-
-
-    public Notification(Order order ,MetaApi whatsappApi){ 
-        this.order = order ;
-        this.whatsappApi = whatsappApi ;
+    public Notification(MetaApi whatsappApi) {
+        this.whatsappApi = whatsappApi;
     }
 
-
-
-    public boolean Send() {
-
-        if (order.getPaymentMethod() != PaymentMethod.CASH){
-            return false ;
+    public boolean send(Order order) {
+        if (order.getPaymentMethod() != PaymentMethod.CASH) {
+            return false;
         }
 
-        User user = order.getUser() ;
-        Brand brand = order.getBrand() ;
-        String message = "Hello " + user.getName() + ", your order with SKU: " + order.getSKU() + "from " + brand.getName() + " has been confirmed and will be send on address:"+ user.getAddress()+". Thank you for shopping with us!" ;
-        String phoneNumber = user.getMobileNumber() ;
-        
-        whatsappApi.sendMessage(phoneNumber , message) ;
-        return true ;
+        User user = order.getUser();
 
+        String message = String.format(
+            "Hi %s, your order #%d from %s (SKU: %s) is confirmed. " +
+            "It will be delivered tomorrow to %s.",
+            user.getName(),
+            order.getId(),
+            order.getBrand().getName(),
+            order.getSku(),
+            user.getAddress()
+        );
 
-
-
+        return whatsappApi.sendMessage(user.getMobileNumber(), message);
     }
-
-
-    
 }
