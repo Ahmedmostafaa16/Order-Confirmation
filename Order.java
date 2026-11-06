@@ -5,7 +5,7 @@ public class Order {
     private String SKU ; 
     private Brand brand ;
     PaymentMethod paymentmethod ;
-    private User user ;
+    User user ;
 
 
     public Order(int id ,String SKU ,Brand brand,PaymentMethod paymentmethod,User user){
